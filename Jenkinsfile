@@ -82,6 +82,7 @@ pipeline {
             }
             steps {
                 script {
+                    // Login to Docker Hub and push Docker image on "mr" repository
                     withCredentials([usernamePassword(credentialsId: "docker-login", usernameVariable: "DOCKER_USER", passwordVariable: "DOCKER_PASSWORD")]) {
                         sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}"
                         sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${GIT_COMMIT}"
@@ -96,6 +97,7 @@ pipeline {
             }
             steps {
                 script {
+                    // Login to Docker Hub and push Docker image on "main" repository
                     withCredentials([usernamePassword(credentialsId: "docker-login", usernameVariable: "DOCKER_USER", passwordVariable: "DOCKER_PASSWORD")]) {
                         sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}"
                         sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${GIT_COMMIT}"
