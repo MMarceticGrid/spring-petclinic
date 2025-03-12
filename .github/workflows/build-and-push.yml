@@ -12,6 +12,7 @@ jobs:
   # Checkstyle job for Merge Request pipeline
   checkstyle:
     runs-on: ubuntu-24.04
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,6 +30,7 @@ jobs:
   # Test job for Merge Request pipeline
   test:
     runs-on: ubuntu-24.04
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -39,6 +41,7 @@ jobs:
   # Build job for Merge Request pipeline (without tests)
   build:
     runs-on: ubuntu-24.04
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -49,6 +52,7 @@ jobs:
   # Docker Image Creation and Push job for Merge Request pipeline
   create-and-push-docker-image-mr:
     runs-on: ubuntu-24.04
+    if: github.event_name == 'pull_request'
     needs: [checkstyle, test, build]
     steps:
       - name: Checkout code
@@ -75,7 +79,6 @@ jobs:
   create-and-push-docker-image-main:
     runs-on: ubuntu-24.04
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
